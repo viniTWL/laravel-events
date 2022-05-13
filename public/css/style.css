@@ -1,0 +1,18 @@
+
+*{
+    font-family:'Roboto';
+}
+
+h1 {
+    color: rgb(255, 0, 0);
+    background-color: #333;
+    height: 50px;
+    line-height: 50px;
+    text-align: center;
+    font-size: 2em;
+}
+
+.card-img{
+    width: 80px;
+    height: 50px;
+}
