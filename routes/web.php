@@ -17,19 +17,14 @@ use App\Http\Controllers\EventController; // método do controller
 
 Route::get('/', [EventController::class, 'index']); // Rota padrão
 
-Route::post('/events', [EventController::class, 'createEvent']); // Rota para criar evento
+Route::post('/events', [EventController::class, 'createEvent']); 
 
 Route::get('/events/create', [EventController::class, 'create']);//->middleware('auth'); // Só pode criar eventos se estiver logado
 
 Route::get('/events/{id}', [EventController::class, 'show']); // evento que recebe um id no parametro
 
+Route::get('/dashboard', [EventController::class, 'dashboard']);//->middleware('auth'); // Só pode acessar o dashboard se estiver logado
 
-Route::middleware([
-    'auth:sanctum',
-    'verified'
-])->get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
  
 Route::get('listar', function(){
   try{
