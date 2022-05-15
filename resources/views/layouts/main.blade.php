@@ -13,7 +13,7 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 
         <!-- css -->
-        <link rel="stylesheet" href="./css/style.css">
+        <link href="{{ asset('./css/style.css') }}" rel="stylesheet">
 
         <!-- script -->
         <script src="/js/script.js"></script>
@@ -26,34 +26,34 @@
     </head>
     <body class="antialiased">
         <header>
-            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <nav id="main-navbar" class="navbar navbar-expand-lg navbar-light bg-light">
                 <a href="/" class="navbar-brand" href="#">TWL EVENTS</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbar">
                     <ul class="navbar-nav">
-                        <li class="nav-item">
+                        <li id="nav-item" class="nav-item">
                             <a class="nav-link" href="#">Eventos</a>
                         </li>
-                        <li class="nav-item">
+                        <li id="nav-item" class="nav-item">
                             <a class="nav-link" href="/events/create">Criar Eventos</a>
                         </li>
                         @auth
-                            <li class="nav-item">
+                            <li id="nav-item" class="nav-item">
                                 <a class="nav-link" href="/dashboard">Meus Eventos</a>
                             </li>
-                            <li class="nav-item">
+                            <li id="nav-item" class="nav-item">
                             <form method="POST" name="logout" action="{{ route('logout') }}">
                                 @csrf
                                 <a href="javascript:document.logout.submit()" class="nav-link" >Sair</a>
                             </li>
                         @endauth
                         @guest
-                            <li class="nav-item">
+                            <li id="nav-item" class="nav-item">
                                 <a class="nav-link" href="/login">Entrar</a>
                             </li>
-                            <li class="nav-item">
+                            <li id="nav-item" class="nav-item">
                                 <a href="/register" class="nav-link">Cadastrar</a>
                             </li>
                         @endguest
@@ -82,7 +82,7 @@
         </main>
         
     </body>
-    <footer>
+    <footer class="footer">
         <p>Vini Events &copy; 2022</p>	
     </footer>
 </html>

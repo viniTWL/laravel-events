@@ -1,11 +1,11 @@
-@extends ('layouts.main')
+@extends('layouts.main')
 
 @section('title', 'Criar Evento')
 
 @section('content')
 
 <div id="event-create-container" class="col-md-6 offset-md-3">
-    <h1>Criar Evento</h1>
+    <h1 id="create-event-title">Crie o seu evento!</h1>
     <form action="/events" method="POST" enctype="multipart/form-data">
         <!--- Aqui estou passando o token para o formulário --->
         @csrf
@@ -18,7 +18,7 @@
             <input type="file" id="image" name="image" class="form-control-file">
         </div>
         <div class="form-group">
-            <label for="title">Título</label>
+            <label for="title">Título:</label>
             <input type="text" class="form-control" id="title" name="title" placeholder="Título do Evento">
         </div>
         <div class="form-group">
@@ -30,7 +30,7 @@
             <input type="text" class="form-control" id="city" name="city" placeholder="Cidade">
         </div>
         <div class="form-group">
-            <label for="items">Adiocione itens de infraestrutura:</label>
+            <label for="items">Adicione itens de infraestrutura:</label>
             <div class="form-group">
                 <input type="checkbox"  id="items" name="items[]" value="cadeiras">
                 Cadeiras
@@ -59,7 +59,7 @@
                 <option value="0">Não</option>
                 <option value="1">Sim</option>
         </div>
-        <input type="submit" class="btn btn-primary" value="Criar Evento">
+        <input id="create-button"type="submit" class="btn btn-primary" value="Criar Evento">
     </form>
     </div>
 @endsection
