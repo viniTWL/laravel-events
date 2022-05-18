@@ -14,8 +14,14 @@ class Event extends Model
     ];
 
     protected $dates = ['date']; // transforma o campo date em um date
+
+    protected $guarded = []; // restrição vazia de update
     
     public function user(){
         return $this->belongsTo('App\Models\User'); // belongsTo é uma relação de 1 para 1
+    }
+
+    public function users(){
+        return $this->belongsToMany('App\Models\User'); // belongsToMany é uma relação de 1 para muitos
     }
 }

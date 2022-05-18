@@ -15,6 +15,10 @@
         <!-- css -->
         <link href="{{ asset('./css/style.css') }}" rel="stylesheet">
 
+        <!-- js -->
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.5/dist/umd/popper.min.js" integrity="sha384-Xe+8cL9oJa6tN/veChSP7q+mnSPaj5Bcu9mPX5F5xIGE0DVittaqT5lorf0EI7Vk" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.min.js" integrity="sha384-kjU+l4N0Yf4ZOJErLsIcvOU2qSb74wXpOhqTvwVx3OElZRweTnQ6d31fXEoRD1Jy" crossorigin="anonymous"></script>
+
         <!-- script -->
         <script src="/js/script.js"></script>
 
@@ -27,14 +31,14 @@
     <body class="antialiased">
         <header>
             <nav id="main-navbar" class="navbar navbar-expand-lg navbar-light bg-light">
-                <a href="/" class="navbar-brand" href="#">TWL EVENTS</a>
+                <a class="navbar-brand" href="#">TWL EVENTS</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbar">
                     <ul class="navbar-nav">
                         <li id="nav-item" class="nav-item">
-                            <a class="nav-link" href="#">Eventos</a>
+                            <a class="nav-link" href="/">Eventos</a>
                         </li>
                         <li id="nav-item" class="nav-item">
                             <a class="nav-link" href="/events/create">Criar Eventos</a>
@@ -47,6 +51,7 @@
                             <form method="POST" name="logout" action="{{ route('logout') }}">
                                 @csrf
                                 <a href="javascript:document.logout.submit()" class="nav-link" >Sair</a>
+                            </form>
                             </li>
                         @endauth
                         @guest
@@ -82,7 +87,7 @@
         </main>
         
     </body>
-    <footer class="footer">
-        <p>Vini Events &copy; 2022</p>	
+    <footer class="footer bg-light">
+        <p>TWL Events &copy; 2022</p>	
     </footer>
 </html>

@@ -50,8 +50,8 @@ class EventController extends Controller
             $event->items = $request->items;
             $event->date = $request->date;
             
-            //$user = auth()->user(); // pega o usuário logado
-            //$event->user_id = $user->id; // atribui o id do usuário logado ao objeto evento
+            $user = auth()->user(); // pega o usuário logado
+            $event->user_id = $user->id; // atribui o id do usuário logado ao objeto evento
             
             $event->save(); // salva no banco de dados
             return redirect('/')->with('msg', 'O evento foi criado com sucesso!');
@@ -62,16 +62,68 @@ class EventController extends Controller
         
         $event = Event::findOrFail($id); // busca o evento pelo id
 
-        return view('events.show', ['event' => $event]); // retorna a view events.show com o evento	
+        $event_owner = User::where('id', $event->user_id)->first()->toArray(); // busca o usuário pelo id do evento
+
+        $user = auth()->user(); // pega o usuário logado
+        $hasUserJoined = false; // variável que verifica se o usuário já se inscreveu no evento
+
+        if($user){
+            $userEvents = $user->eventAsParticipant->toArray();
+
+            foreach($userEvents as $userEvent){
+                    if($userEvent['id'] == $id) /*id do evento)*/{
+                        $hasUserJoined = true;
+                    }
+                }
+        }
+
+        return view('events.show', ['event' => $event, 'event_owner' => $event_owner, 'hasUserJoined' => $hasUserJoined]); // retorna a view events.show com o evento, mando o evento e o usuário pra view
     }
 
     public function dashboard(){
 
-        //$user = auth()->user(); // pega o usuário logado
-        //$events = $user->events;
+        $user = auth()->user(); // pega o usuário logado
+        $events = $user->events; //atrela os eventos ao usuario
 
-       //return view('dashboard');//, ['events' => $events]); // retorna a view dashboard com os eventos do usuário logado
+        $eventAsParticipant = $user->eventAsParticipant; // atrela os eventos que o usuário é participante
+
+       return view('dashboard', ['events' => $events, 'eventasparticipant' => $eventAsParticipant]); // retorna a view dashboard com os eventos do usuário logado
 
     }
 
+    public function destroyEvent($id){
+        $event = Event::findOrFail($id); // busca o evento pelo id
+        $event->delete(); // deleta o evento
+        return redirect('/dashboard')->with('msg', 'O evento foi excluido com sucesso!');
+    }
+
+    public function editEvent($id){
+        $event = Event::findOrFail($id); // busca o evento pelo id
+        
+        $user = auth()->user();
+        if($user->id != $event->user_id){
+            return redirect('/dashboard')->with('msg', 'Você não tem permissão para editar esse evento!');
+        }
+        return view('events.edit', ['event' => $event]); 
+    }
+
+    public function updateEvent(Request $request){
+        $event = Event::findOrFail($request->id)->update($request->all()); // busca o evento pelo id
+
+        return redirect('/dashboard')->with('msg', 'O evento foi atualizado com sucesso!');
+    }
+
+    public function joinEvent($id){
+        $event = Event::findOrFail($id); // busca o evento pelo id
+        $user = auth()->user(); // pega o usuário logado
+        $user->eventAsParticipant()->attach($id); // atrela o usuário ao evento como participante
+        return back()->with('msg', 'Você se inscreveu no evento!');
+    }
+
+    public function leaveEvent($id) {
+        $event = Event::findOrFail($id); // busca o evento pelo id
+        $user = auth()->user(); // pega o usuário logado
+        $user->eventAsParticipant()->detach($id); // desatrela o usuário ao evento como participante
+        return back()->with('msg', 'Você saiu do evento!');
+    }
 };

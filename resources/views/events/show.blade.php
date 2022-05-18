@@ -12,9 +12,16 @@
          <div id="info-container"class="col-md-6">
              <h1>{{ $event->title }}</h1>
              <p class="event-city"><ion-icon name="location-outline"></ion-icon> {{ $event->city }}</p>
-             <p class="event-particpants"><ion-icon name="people-outline"></ion-icon> X Particantes</p>
-             <p class="event-owner"><ion-icon name="star-outline"></ion-icon> event_owner</p> 
-             <a href="#" class="btn btn-primary" id="event-submit">Confirmar presença</a>
+             <p class="event-particpants"><ion-icon name="people-outline"></ion-icon> {{ count($event->users) }} {{ count($event->users) <= 1 ? 'participante' : 'participantes'}} </p>
+             <p class="event-owner"><ion-icon name="star-outline"></ion-icon> {{ $event_owner['name']}}</p> <!--- Pego o dado 'name' assim pois é um array --->
+             @if(!$hasUserJoined)
+                <form action="/events/join/{{ $event->id }}" method="POST">
+             @csrf
+             <a href="/events/join/{{ $event->id }}" class="btn btn-primary" id="event-submit" onclick="event.preventDefault();this.closest('form').submit();">Confirmar presença</a>
+             </form>
+             @else
+             <p class="already-joined-msg">Você já está participando desse evento!</p>
+             @endif
          </div>
          
          <div class="col-md-12" id="description-container">
